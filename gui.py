@@ -2,31 +2,31 @@ import functions
 import FreeSimpleGUI as sg
 import time
 
+sg.theme("DarkPurple")
+
 clock=sg.Text("",key="clock")
 label= sg.Text(" Type in a to-do ")
 input_box = sg.InputText(tooltip="Enter a to-do", key="todo")
-add_Button = sg.Button("Add")
+add_Button = sg.Button("Add",size=12)
 list_box = sg.Listbox(values=functions.get_todos(),key='todos',
-                      enable_events= True, size=[45,10])
+                      enable_events= True, size=[45,15])
 edit_button = sg.Button("Edit")
 complete_button=sg.Button("Complete")
 exit_button=sg.Button("Exit")
 
 window = sg.Window('My To-do App',
-                   layout=[[clock]
+                   layout=[[clock],
                            [label],
-                           [add_Button,input_box],
+                           [input_box,add_Button],
                            [list_box, edit_button,complete_button],
                            [exit_button]],
                    font=('Helvetica',15))
 
 
 while True:
-    event,values = window.read()
+    event,values = window.read(timeout=200)
     window["clock"].update(value=time.strftime("%b %d , %Y %H : %M : %S"))
-    print(1,event)
-    print(2,values)
-    print(3,values["todos"])
+
     match event:
         case "Add":
             todos=functions.get_todos()
